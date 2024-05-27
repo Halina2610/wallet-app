@@ -1,49 +1,5 @@
-<template>
-  <main class="app">
-    <h1 class="app-title">Wallet App</h1>
-    <section class="balance">
-      <div class="balance__header">
-        <p class="balance__title">Total balance:</p>
-        <i
-            v-show="!editingMode"
-            @click="editBalance"
-            title="Edit"
-            class="fa-regular fa-pen-to-square balance__edit-icon"
-        ></i>
-      </div>
-      <div v-show="editingMode" class="balance__info">
-        <span>$</span>
-        <input
-            type="number"
-            placeholder="Enter your current balance..."
-            class="balance__input"
-            v-model="balance"
-            @blur="setBalance"
-            @keyup.enter="setBalance"
-            @input="limitNumericInputs"
-            ref="balanceInputField"
-        />
-      </div>
-      <div v-show="!editingMode" class="balance__info">
-        <p class="balance__total">$ {{ balance }}</p>
-      </div>
-    </section>
-    <AddTransactionForm @add-transaction="addTransaction" />
-    <TransactionList
-        v-show="transactions.length"
-        :transactions="transactions"
-        @delete-transaction="deleteTransaction"
-    />
-  </main>
-</template>
-
 <script setup>
-
 import { ref, onMounted, watch, nextTick } from "vue";
-import AddTransactionForm from "./components/AddTransactionForm.vue";
-import TransactionList from "./components/TransactionsList.vue";
-
-emits: ["delete-transaction"];
 
 const balance = ref("");
 const transactions = ref([]);
@@ -110,7 +66,3 @@ onMounted(() => {
   transactions.value = JSON.parse(localStorage.getItem("transactions")) || [];
 });
 </script>
-
-<style>
-
-</style>

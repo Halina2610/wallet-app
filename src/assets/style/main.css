@@ -1,0 +1,89 @@
+:root {
+  --root-backgraund: #acdff5;
+  --app-backgraund: linear-gradient(to bottom, #d3d3d3, #89ddff);
+  --app-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  --gradient-elements: linear-gradient(
+          125deg,
+          #27c3fc 10%,
+          #29364f 73%,
+          #ccbb00 17%
+  );
+
+  --accent-text: #ccbb00;
+  --text: #363535;
+  --secondary: #bab5e2;
+  --text-color-primary: #29364f;
+  --text-color-secondary: #959596;
+  --white: #fff;
+  --success: #25e044;
+  --error: #c52e2e;
+  --error-backgraund: #ffbaba;
+  --shadow-s: 0 2px 2px rgba(0, 0, 0, 0.2);
+  --border-radius-l: 16px;
+  --border-radius-s: 12px;
+  --font-size-m: 18px;
+  --font-size-l: 24px;
+  --font-size-s: 14px;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Roboto Light", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  width: 100%;
+  line-height: 1;
+  font-size: var(--font-size-m);
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--root-backgraund);
+}
+
+section {
+  margin-top: 16px;
+}
+
+input,
+button {
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+input::-ms-clear {
+  display: none;
+}
+
+button,
+i,
+input[type="radio"] {
+  cursor: pointer;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+::placeholder {
+  color: var(--text-color-secondary);
+}
+
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
