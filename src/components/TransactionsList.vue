@@ -1,68 +1,96 @@
+<template>
+  <section class="transactions-list">
+    <p class="list__title">Trasnsactions</p>
+    <div class="list__container">
+      <template
+          class="transaction-card"
+          v-for="transaction in sortedByDate"
+          :key="transaction.createdAt"
+      >
+        <TransactionItem
+            :transaction="transaction"
+            @delete-transaction="deleteTransaction"
+        />
+      </template>
+    </div>
+  </section>
+</template>
+
 <script setup>
-import { ref, onMounted, watch, nextTick } from "vue";
+import { computed, toRefs } from "vue";
+import TransactionItem from "./TransactionItem.vue";
 
-const balance = ref("");
-const transactions = ref([]);
-const editingMode = ref(false);
-const balanceInputField = ref();
+const props = defineProps({
+  transactions: Array,
+});
 
-const setBalance = () => {
-  if (balance.value !== "") {
-    editingMode.value = false;
-  }
+const { transactions: transactions } = toRefs(props);
+
+const emit = defineEmits(["delete-transaction"]);
+
+emits: ["delete-transaction"];
+
+const sortedByDate = computed(() => {
+  return transactions.value.sort((a, b) => {
+    return b.createdAt - a.createdAt;
+  });
+});
+
+const deleteTransaction = (transaction) => {
+  emit("delete-transaction", transaction);
 };
+</script>
 
-const editBalance = async () => {
-  editingMode.value = true;
-  await nextTick();
-  balanceInputField.value.focus();
-};
+<style scoped>
+.transaction-card {
+  margin-right: 10px;
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: var(--shadow-s);
+  padding: 16px 20px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
 
-function limitNumericInputs() {
-  if (balance.value > 99999999) {
-    balance.value = 99999999;
-  }
-  if (balance.value < 0) {
-    balance.value = 0;
+  @media (max-width: 990px) {
+    padding: 12px 16px;
+    object-fit: contain;
   }
 }
 
-const addTransaction = (transaction) => {
-  transactions.value.push(transaction);
-  if (transaction.type == "expense") {
-    balance.value -= transaction.amount;
-  } else {
-    balance.value = +balance.value + transaction.amount;
+
+
+  @media (max-width: 990px) {
+    max-width: 200px;
   }
-  editingMode.value = false;
-};
 
-const deleteTransaction = (transaction) => {
-  transactions.value = transactions.value.filter(
-      (item) => item.id !== transaction.value.id
-  );
-  if (transaction.value.type == "expense") {
-    balance.value = +balance.value + transaction.value.amount;
-  } else {
-    balance.value -= transaction.value.amount;
+  @media (max-width: 480px) {
+    max-width: 150px;
   }
-};
 
-watch(balance, (newVal) => {
-  localStorage.setItem("balance", newVal);
-});
+.transaction-card__amount {
+  font-weight: 500;
 
-watch(
-    transactions,
-    (newVal) => {
-      localStorage.setItem("transactions", JSON.stringify(newVal));
-    },
-    { deep: true }
-);
+  @media (max-width: 990px) {
+    margin-top: 8px;
+  }
+}
 
-onMounted(() => {
-  balance.value = localStorage.getItem("balance") || "";
-  editingMode.value = balance.value === "" ? true : false;
-  transactions.value = JSON.parse(localStorage.getItem("transactions")) || [];
-});
-</script>
+.transaction-card__amount--expense {
+  color: var(--error);
+}
+
+.transaction-card__amount--income {
+  color: var(--success);
+}
+
+.transaction-card__delete-icon {
+  color: var(--secondary);
+  margin-left: 32px;
+}
+.transaction-card__date {
+  margin-top: 12px;
+  font-size: 14px;
+  color: var(--text-color-secondary);
+}
+</style>

@@ -6,46 +6,46 @@
     <div class="form__input-group">
       <label class="form__label">Name</label>
       <input
-        class="form__input"
-        @focus="removeError"
-        @input="name = name.slice(0, 30)"
-        type="text"
-        placeholder="Enter transaction name..."
-        v-model="name"
-        ref="nameInput"
+          class="form__input"
+          @focus="removeError"
+          @input="name = name.slice(0, 30)"
+          type="text"
+          placeholder="Enter transaction name..."
+          v-model="name"
+          ref="nameInput"
       />
     </div>
     <div class="form__input-group">
       <label class="form__label">Amount</label>
       <input
-        class="form__input"
-        @focus="removeError"
-        @input="limitNumericInputs"
-        type="number"
-        placeholder="Enter amount..."
-        v-model="amount"
-        ref="amountInput"
+          class="form__input"
+          @focus="removeError"
+          @input="limitNumericInputs"
+          type="number"
+          placeholder="Enter amount..."
+          v-model="amount"
+          ref="amountInput"
       />
     </div>
 
     <div class="form__transaction-types">
       <label class="form__radio-label">
         <input
-          type="radio"
-          name="type"
-          value="income"
-          v-model="type"
-          class="form__radio-btn"
+            type="radio"
+            name="type"
+            value="income"
+            v-model="type"
+            class="form__radio-btn"
         />
         <p>Income</p>
       </label>
       <label class="form__radio-label">
         <input
-          type="radio"
-          name="type"
-          value="expense"
-          v-model="type"
-          class="form__radio-btn"
+            type="radio"
+            name="type"
+            value="expense"
+            v-model="type"
+            class="form__radio-btn"
         />
         <p>Expense</p>
       </label>
@@ -77,17 +77,17 @@ function limitNumericInputs() {
 
 const addTransaction = () => {
   if (
-    name.value === "" ||
-    amount.value === "" ||
-    amount.value === 0 ||
-    type.value === null
+      name.value === "" ||
+      amount.value === "" ||
+      amount.value === 0 ||
+      type.value === null
   ) {
     nameInput.value.classList[name.value === "" ? "add" : "remove"](
-      "form__input--error"
+        "form__input--error"
     );
     amountInput.value.classList[
-      amount.value === "" || amount.value === 0 ? "add" : "remove"
-    ]("form__input--error");
+        amount.value === "" || amount.value === 0 ? "add" : "remove"
+        ]("form__input--error");
 
     errorMessage.value = "Please  fill in all fields ";
 
@@ -145,16 +145,47 @@ const removeError = (e) => {
   outline: 1px solid var(--accent-text);
 }
 
+.form__transaction-types {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+}
+
+.form__radio-label {
+  text-align: center;
+  cursor: pointer;
+}
+
+.form__radio-btn {
+  height: 14px;
+  width: 14px;
+  accent-color: var(--accent-text);
+}
+
+.form__error-message {
+  color: var(--error);
+  font-weight: 500;
+  border-radius: 5px;
+}
+.form__input--error {
+  outline: 1px solid var(--error);
+  background-color: var(--error-backgraund);
+}
 
 .form__submitBtn {
   margin-top: 10px;
   padding: 12px 16px;
   border-radius: 8px;
   font-weight: 500;
+  color: var(--white);
   transition: 0.3s ease-in-out;
+  background: var(--gradient-elements);
   opacity: 0.9;
   box-shadow: var(--shadow-s);
 }
 
-
+.form__submitBtn:hover {
+  opacity: 1;
+}
 </style>
