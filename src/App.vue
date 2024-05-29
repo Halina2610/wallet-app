@@ -1,7 +1,13 @@
 <template>
   <main class="app">
-    <h1 class="app-title">Wallet App</h1>
+    <h1 class="app-title">Wallet App <i class="fa-solid fa-hand-holding-dollar"></i></h1>
+    <div class="curses-card ">
+      <span> <i class="fa-solid fa-dollar-sign"></i>|</span>
+      <span><i class="fa-solid fa-ruble-sign"></i>|</span>
+      <span><i class="fa-solid fa-euro-sign"></i></span>
+      </div>
     <section class="balance">
+
       <div class="balance__header">
         <p class="balance__title">Баланс:</p>
         <i
@@ -11,26 +17,26 @@
             class="fa-regular fa-pen-to-square balance__edit-icon"
         ></i>
       </div>
-      <div v-show="editingMode" class="balance__info">
+      <div v-show="editingMode" class="balance__info" @focusout="handleFocusOut">
         <input
             type="number"
             placeholder="Enter your current balance..."
             class="balance__input"
             v-model="balance"
-            @blur="setBalance"
             @keyup.enter="setBalance"
             @input="limitNumericInputs"
             ref="balanceInputField"
         />
+        <select v-model="currency" class="balance__currency-select">
+          <option value="USD">USD</option>
+          <option value="EUR">EUR</option>
+          <option value="RUB">RUB</option>
+          <option value="BYN">BYN</option>
+        </select>
       </div>
+
       <div v-show="!editingMode" class="balance__info">
         <p class="balance__total">
-          <select v-model="currency" class="balance__currency-select">
-            <option value="USD">USD</option>
-            <option value="EUR">EUR</option>
-            <option value="RUB">RUB</option>
-            <option value="BYN">BYN</option>
-          </select>
           {{ balance }} {{ currency }}
         </p>
       </div>
@@ -38,6 +44,7 @@
     <AddTransactionForm @add-transaction="addTransaction" />
     <TransactionList
         v-show="transactions.length"
+        :currency="currency"
         :transactions="transactions"
         @delete-transaction="deleteTransaction"
     />
@@ -68,6 +75,13 @@ const editBalance = async () => {
   await nextTick();
   balanceInputField.value.focus();
 };
+
+const handleFocusOut = (event) => {
+  if (!event.currentTarget.contains(event.relatedTarget)) {
+    setBalance();
+  }
+};
+
 
 function limitNumericInputs() {
   if (balance.value > 99999999) {
@@ -148,6 +162,22 @@ onMounted(() => {
   font-size: 30px;
 }
 
+.curses-card {
+  margin-right: 10px;
+  background-color: var(--accent-text);
+  border-radius: 8px;
+  box-shadow: var(--shadow-s);
+  padding: 16px 20px;
+  margin-top: 10px;
+  color: var(--white);
+
+
+  @media (max-width: 990px) {
+    padding: 12px 16px;
+    object-fit: contain;
+  }
+}
+
 .balance {
   background: var(--gradient-elements);
   color: var(--white);
@@ -187,6 +217,16 @@ onMounted(() => {
   border-radius: 5px;
   color: var(--text-color-primary);
 }
+
+.balance__currency-select {
+  margin-top: 4px;
+  margin-left: 12px;
+  padding: 8px;
+  width: 100%;
+  border-radius: 5px;
+  color: var(--text-color-primary);
+}
+
 
 .balance__total {
   font-size: var(--font-size-l);

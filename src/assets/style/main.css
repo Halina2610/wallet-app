@@ -11,7 +11,7 @@
 
   --accent-text: #ccbb00;
   --text: #363535;
-  --secondary: #bab5e2;
+  --secondary: #27c3fc;
   --text-color-primary: #29364f;
   --text-color-secondary: #959596;
   --white: #fff;
@@ -52,7 +52,8 @@ section {
 }
 
 input,
-button {
+button,
+select {
   border: none;
   outline: none;
   font-family: inherit;

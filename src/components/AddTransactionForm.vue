@@ -4,19 +4,19 @@
       {{ errorMessage }}
     </div>
     <div class="form__input-group">
-      <label class="form__label">Name</label>
+      <label class="form__label">Наименование</label>
       <input
           class="form__input"
           @focus="removeError"
           @input="name = name.slice(0, 30)"
           type="text"
-          placeholder="Enter transaction name..."
+          placeholder="Введите наименование транзакции..."
           v-model="name"
           ref="nameInput"
       />
     </div>
     <div class="form__input-group">
-      <label class="form__label">Amount</label>
+      <label class="form__label">Сумма:</label>
       <input
           class="form__input"
           @focus="removeError"
@@ -37,7 +37,7 @@
             v-model="type"
             class="form__radio-btn"
         />
-        <p>Income</p>
+        Доходы
       </label>
       <label class="form__radio-label">
         <input
@@ -47,10 +47,10 @@
             v-model="type"
             class="form__radio-btn"
         />
-        <p>Expense</p>
+        Расходы
       </label>
     </div>
-    <button class="form__submitBtn" type="submit">Add transaction</button>
+    <button class="form__submitBtn" type="submit">Добавить транзакцию</button>
   </form>
 </template>
 

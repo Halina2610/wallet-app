@@ -47,7 +47,7 @@ const deleteTransaction = () => {
   margin-right: 10px;
   background-color: var(--white);
   border-radius: 8px;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-s);
   padding: 16px 20px;
   margin-top: 10px;
   display: flex;

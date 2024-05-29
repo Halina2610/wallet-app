@@ -1,14 +1,11 @@
 <template>
   <section class="transactions-list">
-    <p class="list__title">Trasnsactions</p>
+    <p class="list__title">Transactions</p>
     <div class="list__container">
-      <template
-          class="transaction-card"
-          v-for="transaction in sortedByDate"
-          :key="transaction.createdAt"
-      >
+      <template v-for="transaction in sortedByDate" :key="transaction.createdAt">
         <TransactionItem
             :transaction="transaction"
+            :currency="currency"
             @delete-transaction="deleteTransaction"
         />
       </template>
@@ -22,13 +19,12 @@ import TransactionItem from "./TransactionItem.vue";
 
 const props = defineProps({
   transactions: Array,
+  currency: String,
 });
 
-const { transactions: transactions } = toRefs(props);
+const { transactions, currency } = toRefs(props);
 
 const emit = defineEmits(["delete-transaction"]);
-
-emits: ["delete-transaction"];
 
 const sortedByDate = computed(() => {
   return transactions.value.sort((a, b) => {
@@ -85,7 +81,7 @@ const deleteTransaction = (transaction) => {
 }
 
 .transaction-card__delete-icon {
-  color: var(--secondary);
+  color: var(--root-backgraund);
   margin-left: 32px;
 }
 .transaction-card__date {
