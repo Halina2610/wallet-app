@@ -16,8 +16,10 @@
             title="Edit"
             class="fa-regular fa-pen-to-square balance__edit-icon"
         ></i>
+
       </div>
       <div v-show="editingMode" class="balance__info" @focusout="handleFocusOut">
+
         <input
             type="number"
             placeholder="Enter your current balance..."
@@ -27,6 +29,7 @@
             @input="limitNumericInputs"
             ref="balanceInputField"
         />
+
         <select v-model="currency" class="balance__currency-select">
           <option value="USD">USD</option>
           <option value="EUR">EUR</option>
@@ -41,7 +44,9 @@
         </p>
       </div>
     </section>
+
     <AddTransactionForm @add-transaction="addTransaction" />
+
     <TransactionList
         v-show="transactions.length"
         :currency="currency"
